@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">My Browser</string>
+    <string name="hint_url">輸入網址或搜尋</string>
+    <string name="btn_go">前往</string>
+    <string name="title_bookmarks">書籤</string>
+    <string name="title_history">瀏覽紀錄</string>
+    <string name="title_tabs">分頁</string>
+    <string name="empty_list">目前沒有項目</string>
+    <string name="action_clear_history">清空紀錄</string>
+    <string name="menu_new_tab">開新分頁</string>
+    <string name="menu_tabs">分頁清單（%1$d）</string>
+    <string name="menu_add_bookmark">加入書籤</string>
+    <string name="menu_remove_bookmark">移除書籤</string>
+    <string name="menu_bookmarks">書籤</string>
+    <string name="menu_history">瀏覽紀錄</string>
+    <string name="toast_bookmark_added">已加入書籤</string>
+    <string name="toast_bookmark_removed">已移除書籤</string>
+    <string name="btn_new_tab">+ 新分頁</string>
+</resources>
