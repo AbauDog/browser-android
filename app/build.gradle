@@ -17,8 +17,8 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
         ndk {
-            // 先只打包 arm64-v8a（目前測試機種）；要支援舊的 32-bit 裝置再加回 armeabi-v7a
-            abiFilters 'arm64-v8a'
+            // 同時打包 32-bit（Galaxy Tab A SM-P355Y 為 armeabi-v7a）與 64-bit 裝置
+            abiFilters 'armeabi-v7a', 'arm64-v8a'
         }
     }
 
