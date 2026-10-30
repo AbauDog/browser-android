@@ -89,6 +89,13 @@ class MainActivity : AppCompatActivity() {
         menuButton.setOnClickListener { showOverflowMenu(menuButton) }
     }
 
+    override fun onNewIntent(intent: Intent) {
+        super.onNewIntent(intent)
+        setIntent(intent)
+        val url = intent.dataString ?: return
+        createTab(url, makeActive = true)
+    }
+
     @Deprecated("Deprecated in Java")
     override fun onBackPressed() {
         if (activeTab.canGoBack) {
@@ -135,8 +142,7 @@ class MainActivity : AppCompatActivity() {
                 request: GeckoSession.NavigationDelegate.LoadRequest
             ): GeckoResult<AllowOrDeny>? {
                 val uri = request.uri
-                val host = Uri.parse(uri).host?.lowercase()
-                if (host != null && host in YOUTUBE_HOSTS) {
+                if (isYoutubeWatchUrl(Uri.parse(uri))) {
                     openInYtPlayer(uri)
                     return GeckoResult.deny()
                 }
@@ -207,6 +213,20 @@ class MainActivity : AppCompatActivity() {
             input.contains(".") && !input.contains(" ") -> "https://$input"
             else -> "https://www.google.com/search?q=${Uri.encode(input)}"
         }
+    }
+
+    /** 只有真正的播放頁才轉去播放器；首頁、搜尋結果、頻道頁等留在瀏覽器裡瀏覽 */
+    private fun isYoutubeWatchUrl(uri: Uri): Boolean {
+        val host = uri.host?.lowercase() ?: return false
+        if (host !in YOUTUBE_HOSTS) return false
+        if (host == "youtu.be") {
+            val path = uri.path
+            return !path.isNullOrEmpty() && path != "/"
+        }
+        val path = uri.path ?: return false
+        return (path == "/watch" && !uri.getQueryParameter("v").isNullOrEmpty()) ||
+            path.startsWith("/shorts/") ||
+            path.startsWith("/live/")
     }
 
     private fun openInYtPlayer(url: String) {
